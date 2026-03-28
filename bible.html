@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>성경 읽기 — 가돌</title>
+  <meta name="description" content="가돌 — 6개 언어 병렬 성경 읽기" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0a0f1e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<!-- ── 읽기 진행 바 ── -->
+<div class="reading-bar"><div id="readingFill" class="reading-fill"></div></div>
+
+<!-- ── 헤더 ── -->
+<header class="app-header">
+  <div class="header-left">
+    <button class="icon-btn" id="menuBtn" aria-label="목차 열기">☰</button>
+    <a href="index.html" class="header-home-logo">가돌</a>
+    <span class="header-sep">|</span>
+    <span class="header-info" id="headerInfo">창세기 1장</span>
+  </div>
+  <div class="header-right">
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">☀️</button>
+  </div>
+</header>
+
+<!-- ── 언어 선택 바 ── -->
+<div class="lang-bar" id="langBar">
+  <span class="lang-bar-label">언어 선택</span>
+  <div class="lang-toggles" id="langToggles">
+    <button class="lp lp-ko active" data-lang="ko" onclick="toggleLang('ko')" title="한국어 개역한글">
+      <span class="lp-icon">🇰🇷</span><span class="lp-text">한국어</span>
+    </button>
+    <button class="lp lp-en active" data-lang="en" onclick="toggleLang('en')" title="English WEB">
+      <span class="lp-icon">🇺🇸</span><span class="lp-text">English</span>
+    </button>
+    <button class="lp lp-zh" data-lang="zh" onclick="toggleLang('zh')" title="中文 和合本">
+      <span class="lp-icon">🇨🇳</span><span class="lp-text">中文</span>
+    </button>
+    <button class="lp lp-ru" data-lang="ru" onclick="toggleLang('ru')" title="Русский Синодальный">
+      <span class="lp-icon">🇷🇺</span><span class="lp-text">Русский</span>
+    </button>
+    <button class="lp lp-ja" data-lang="ja" onclick="toggleLang('ja')" title="日本語 口語訳">
+      <span class="lp-icon">🇯🇵</span><span class="lp-text">日本語</span>
+    </button>
+    <button class="lp lp-es" data-lang="es" onclick="toggleLang('es')" title="Español Reina-Valera">
+      <span class="lp-icon">🇪🇸</span><span class="lp-text">Español</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── 사이드바 오버레이 ── -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── 사이드바 (전체 성경 목록) ── -->
+<nav class="sidebar" id="sidebar">
+
+  <!-- 구약/신약 탭 -->
+  <div class="toc-tabs">
+    <button class="toc-tab active" id="tabOT" onclick="switchTestament('OT')">
+      <span class="toc-tab-label">📜 구약성경</span>
+      <span class="toc-tab-count">39권</span>
+    </button>
+    <button class="toc-tab" id="tabNT" onclick="switchTestament('NT')">
+      <span class="toc-tab-label">✝️ 신약성경</span>
+      <span class="toc-tab-count">27권</span>
+    </button>
+  </div>
+
+  <!-- 검색창 -->
+  <div class="toc-search-wrap">
+    <input
+      type="text"
+      id="tocSearch"
+      class="toc-search"
+      placeholder="성경 검색... (예: 창세기, John)"
+      oninput="filterToc(this.value)"
+      autocomplete="off"
+    />
+    <span class="toc-search-icon">🔍</span>
+  </div>
+
+  <!-- 성경 목록 스크롤 영역 -->
+  <div class="toc-scroll" id="tocScroll">
+    <div id="tocOT" class="toc-panel"></div>
+    <div id="tocNT" class="toc-panel" style="display:none"></div>
+  </div>
+
+  <div class="sidebar-footer">
+    <a href="credits.html" class="sidebar-link">저작권 정보</a>
+    <button class="sidebar-link-btn" onclick="doLogout()">로그아웃</button>
+  </div>
+</nav>
+
+<!-- ── 메인 콘텐츠 ── -->
+<main class="main-content">
+  <div class="chapter-header">
+    <h1 class="chapter-title" id="chapterTitle">창세기 1장</h1>
+    <p class="chapter-label" id="chapterLabel"></p>
+  </div>
+  <div class="verses-wrap" id="versesWrap">
+    <div class="loading-placeholder">
+      <div class="spinner"></div>
+      <p>성경을 불러오는 중...</p>
+    </div>
+  </div>
+  <div class="chapter-nav">
+    <button class="ch-nav-btn" id="prevBtn" onclick="prevChapter()">← 이전 장</button>
+    <button class="ch-nav-btn" id="nextBtn" onclick="nextChapter()">다음 장 →</button>
+  </div>
+</main>
+
+<!-- ── 저장 말씀 패널 ── -->
+<div class="fav-panel" id="favPanel">
+  <div class="fav-panel-header">
+    <h3>❤️ 저장한 말씀</h3>
+    <button class="fav-panel-close" onclick="toggleFavPanel()">✕</button>
+  </div>
+  <div class="fav-panel-body" id="favPanelBody">
+    <p class="fav-empty">저장한 말씀이 없습니다.<br>구절 옆 ♡ 버튼을 눌러 저장해보세요.</p>
+  </div>
+</div>
+
+<!-- ── 메모 입력 모달 ── -->
+<div class="memo-modal-bg" id="memoModalBg" onclick="closeMemoModal()"></div>
+<div class="memo-modal" id="memoModal">
+  <div class="memo-modal-header">
+    <span class="memo-modal-ref" id="memoModalRef"></span>
+    <button class="memo-modal-close" onclick="closeMemoModal()">✕</button>
+  </div>
+  <div class="memo-modal-verse" id="memoModalVerse"></div>
+  <div class="memo-hl-row">
+    <span class="memo-hl-label">하이라이트</span>
+    <div class="memo-hl-colors" id="memoHlColors">
+      <button class="memo-hl-btn hl-c-yellow" data-color="yellow" onclick="pickHlColor(this)"></button>
+      <button class="memo-hl-btn hl-c-green" data-color="green" onclick="pickHlColor(this)"></button>
+      <button class="memo-hl-btn hl-c-blue" data-color="blue" onclick="pickHlColor(this)"></button>
+      <button class="memo-hl-btn hl-c-pink" data-color="pink" onclick="pickHlColor(this)"></button>
+      <button class="memo-hl-btn hl-c-purple" data-color="purple" onclick="pickHlColor(this)"></button>
+      <button class="memo-hl-btn hl-c-none" data-color="none" onclick="pickHlColor(this)">✕</button>
+    </div>
+  </div>
+  <textarea class="memo-textarea" id="memoTextarea" placeholder="이 말씀에 대한 메모를 작성하세요..."></textarea>
+  <button class="memo-save-btn" onclick="saveMemoFromModal()">저장</button>
+</div>
+
+<!-- ── 메모 목록 패널 ── -->
+<div class="fav-panel" id="memoPanel">
+  <div class="fav-panel-header">
+    <h3>📝 내 메모</h3>
+    <button class="fav-panel-close" onclick="toggleMemoPanel()">✕</button>
+  </div>
+  <div class="fav-panel-body" id="memoPanelBody">
+    <p class="fav-empty">작성한 메모가 없습니다.<br>말씀을 탭하고 메모를 남겨보세요.</p>
+  </div>
+</div>
+
+<!-- ── 하단 내비게이션 ── -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" id="navRead" onclick="scrollToTop(); setNavActive('navRead')">
+    <span class="bnav-icon">📖</span>
+    <span class="bnav-label">읽기</span>
+  </button>
+  <button class="bnav-btn" id="navFav" onclick="toggleFavPanel()">
+    <span class="bnav-icon">❤️</span>
+    <span class="bnav-label">저장</span>
+  </button>
+  <button class="bnav-btn" id="navMemo" onclick="toggleMemoPanel()">
+    <span class="bnav-icon">📝</span>
+    <span class="bnav-label">메모</span>
+  </button>
+  <button class="bnav-btn" id="navHome" onclick="location.href='index.html'">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-label">홈</span>
+  </button>
+</nav>
+
+<!-- ── 단어 시트 배경 ── -->
+<div class="sheet-bg" id="sheetBg"></div>
+
+<!-- ── 단어 바텀 시트 ── -->
+<div class="word-sheet" id="wordSheet" role="dialog" aria-modal="true">
+  <div class="sheet-drag-handle" id="sheetHandle"></div>
+  <div class="sheet-header">
+    <div class="sheet-header-left">
+      <span class="sheet-word" id="sheetWord"></span>
+      <span class="sheet-lang-badge" id="sheetLangBadge"></span>
+    </div>
+    <div class="sheet-header-right">
+      <button class="sheet-tts-btn" id="sheetTtsBtn" onclick="speakWord()" title="발음 듣기">🔊</button>
+      <button class="sheet-close icon-btn" onclick="closeSheet()">✕</button>
+    </div>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<!-- ── 토스트 ── -->
+<div id="toast"></div>
+
+<!-- ── 스크립트 ── -->
+<script src="js/bible-data.js?v=2.6"></script>
+<script src="js/data.js?v=2.6"></script>
+<script src="js/dict.js?v=2.6"></script>
+<script src="js/app.js?v=2.6"></script>
+</body>
+</html>

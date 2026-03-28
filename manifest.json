@@ -1,0 +1,54 @@
+{
+  "name": "가돌 성경 — KRV·WEB 병렬 읽기",
+  "short_name": "가돌 성경",
+  "description": "개역한글(KRV 1961)·영어(WEB) 병렬 성경. 단어 탭으로 한국어 뜻·백과사전·지도 미리보기 제공.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "categories": ["education", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "창세기 1장 KRV·WEB 병렬 읽기"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "창세기 1장",
+      "url": "/index.html?book=GEN&ch=1",
+      "description": "창세기 1장 바로가기"
+    },
+    {
+      "name": "요한복음 1장",
+      "url": "/index.html?book=JHN&ch=1",
+      "description": "요한복음 1장 바로가기"
+    },
+    {
+      "name": "저작권 정보",
+      "url": "/credits.html",
+      "description": "사용 번역본 및 라이선스 정보"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

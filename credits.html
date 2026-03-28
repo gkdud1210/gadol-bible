@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>저작권 정보 — 가돌 성경</title>
+  <meta name="description" content="가돌 성경 앱의 사용 번역본·데이터 출처·라이선스 정보" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .credits-page { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.875rem; color: var(--accent); margin-bottom: 24px;
+      padding: 6px 12px; border-radius: var(--radius-sm);
+      background: var(--accent-glow);
+      border: 1px solid rgba(108,142,255,0.3);
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .back-btn:hover { background: rgba(108,142,255,0.25); text-decoration: none; }
+
+    .credits-hero {
+      text-align: center;
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .credits-logo {
+      font-size: 3rem; font-weight: 700; margin-bottom: 8px;
+      background: linear-gradient(135deg, #6c8eff, #fbbf24);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .credits-tagline { font-size: 0.95rem; color: var(--text3); }
+
+    .credits-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .credits-section h2 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border2);
+    }
+    .credits-section h2 span { margin-right: 6px; }
+
+    /* 번역본 카드 */
+    .trans-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border2);
+    }
+    .trans-card:last-child { border-bottom: none; padding-bottom: 0; }
+    .trans-badge {
+      font-size: 0.7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .trans-badge.krv { background: rgba(125,211,252,0.12); border: 1px solid rgba(125,211,252,0.3); color: #7dd3fc; }
+    .trans-badge.web { background: rgba(134,239,172,0.12); border: 1px solid rgba(134,239,172,0.3); color: #86efac; }
+    .trans-info h3 { font-size: 0.9rem; font-weight: 600; color: var(--text1); margin-bottom: 4px; }
+    .trans-info p  { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+    .trans-info .pd-badge {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700;
+      background: rgba(251,191,36,0.15);
+      border: 1px solid rgba(251,191,36,0.3);
+      color: #fbbf24;
+      padding: 2px 8px; border-radius: 20px;
+      margin-top: 4px;
+    }
+    .trans-info .pd-note { font-size: 0.75rem; color: var(--text3); margin-top: 4px; font-style: italic; }
+
+    /* 기술 스택 */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+    .tech-item {
+      background: var(--bg-app);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 0.8rem;
+    }
+    .tech-item strong { display: block; color: var(--text1); margin-bottom: 2px; }
+    .tech-item span { color: var(--text3); }
+
+    /* API 카드 */
+    .api-item {
+      display: flex; gap: 12px; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border2);
+      font-size: 0.85rem;
+    }
+    .api-item:last-child { border-bottom: none; }
+    .api-icon { font-size: 1.25rem; width: 28px; flex-shrink: 0; }
+    .api-name { font-weight: 600; color: var(--text1); }
+    .api-desc { font-size: 0.78rem; color: var(--text3); }
+    .api-license { font-size: 0.7rem; color: var(--gold); }
+
+    /* 법적 고지 */
+    .legal-text { font-size: 0.82rem; color: var(--text2); line-height: 1.8; }
+    .legal-text strong { color: var(--text1); }
+
+    /* 버전 정보 */
+    .version-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text4);
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border2);
+    }
+    .version-footer a { color: var(--accent); }
+
+    /* 연락처 */
+    .contact-row {
+      display: flex; gap: 8px; align-items: center;
+      font-size: 0.85rem; color: var(--text2);
+      padding: 6px 0;
+    }
+
+    /* NO NIV 경고 박스 */
+    .warn-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      font-size: 0.82rem;
+      color: #fca5a5;
+      line-height: 1.7;
+    }
+    .warn-box strong { color: #f87171; }
+  </style>
+</head>
+<body>
+<div id="readingBar"><div id="readingFill"></div></div>
+
+<header id="appHeader">
+  <div class="header-left">
+    <a href="index.html" class="icon-btn" title="돌아가기">←</a>
+    <span class="logo-text">가돌</span>
+  </div>
+  <div class="header-center">저작권 정보</div>
+  <div class="header-right">
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">☀️</button>
+  </div>
+</header>
+
+<main class="credits-page">
+
+  <a href="index.html" class="back-btn">← 성경 읽기로 돌아가기</a>
+
+  <!-- 헤로 -->
+  <div class="credits-hero">
+    <div class="credits-logo">가돌 성경</div>
+    <p class="credits-tagline">
+      개역한글(KRV 1961) · World English Bible(WEB)<br/>
+      한국어 백과사전 패널 · 단어 탭 사전 · PWA
+    </p>
+  </div>
+
+  <!-- 성경 번역본 라이선스 -->
+  <div class="credits-section">
+    <h2><span>📜</span> 사용 번역본 및 라이선스</h2>
+
+    <div class="warn-box">
+      <strong>⚠️ 사용하지 않는 번역본 안내:</strong><br/>
+      이 앱은 <strong>개역개정(NIV 한국어 판)</strong>과 <strong>NIV (New International Version)</strong>을
+      사용하지 않습니다. 개역개정은 대한성서공회 저작권 보호 대상이며, NIV는 Biblica의 상업 라이선스가
+      필요합니다. 본 앱은 공개도메인 텍스트만 사용합니다.
+    </div>
+
+    <div class="trans-card">
+      <span class="trans-badge krv">KO · KRV</span>
+      <div class="trans-info">
+        <h3>개역한글성경 (1961)</h3>
+        <p>
+          대한성서공회가 1961년 발간한 한글 성경 번역본입니다.<br/>
+          원 저작권자 타계 후 50년 경과(2012년 기준) 및 한국 저작권법 적용에 따라
+          공개도메인으로 간주됩니다.
+        </p>
+        <span class="pd-badge">✓ 공개도메인 (Public Domain)</span>
+        <p class="pd-note">※ 1977년 이후 개역개정은 여전히 저작권 보호 대상입니다. 본 앱은 1961년 판만 사용합니다.</p>
+      </div>
+    </div>
+
+    <div class="trans-card">
+      <span class="trans-badge web">EN · WEB</span>
+      <div class="trans-info">
+        <h3>World English Bible (WEB)</h3>
+        <p>
+          World English Bible은 Michael Paul Johnson이 이끄는 역자 팀이 완성한
+          현대 영어 성경 번역본입니다. 미국 표준역(American Standard Version, 1901)을
+          개정·현대화한 번역으로, 저작권이 없는 공개도메인입니다.
+        </p>
+        <span class="pd-badge">✓ 공개도메인 (Public Domain)</span>
+        <p class="pd-note">출처: <a href="https://worldenglishbible.org" target="_blank" rel="noopener">worldenglishbible.org</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제공 데이터 및 API -->
+  <div class="credits-section">
+    <h2><span>🔌</span> 사용 API 및 외부 데이터</h2>
+
+    <div class="api-item">
+      <div class="api-icon">📚</div>
+      <div>
+        <div class="api-name">Wikipedia REST API (한국어)</div>
+        <div class="api-desc">한국어 단어 백과사전 요약 제공 — 단어 탭 시 Wikipedia 최신 내용 비동기 로드</div>
+        <div class="api-license">라이선스: CC BY-SA 4.0 (크리에이티브 커먼즈 표시-동일조건변경허락)</div>
+      </div>
+    </div>
+
+    <div class="api-item">
+      <div class="api-icon">🗺️</div>
+      <div>
+        <div class="api-name">OpenStreetMap (OSM) 타일</div>
+        <div class="api-desc">성경 지명 위치 미리보기 지도 타일 제공 — 갈릴리, 요단강, 나사렛, 벳새다 등</div>
+        <div class="api-license">라이선스: © OpenStreetMap contributors, ODbL</div>
+      </div>
+    </div>
+
+    <div class="api-item">
+      <div class="api-icon">🔤</div>
+      <div>
+        <div class="api-name">Google Fonts</div>
+        <div class="api-desc">Noto Serif KR (한국어 본문) · EB Garamond (영어 본문) · Inter (UI)</div>
+        <div class="api-license">라이선스: SIL Open Font License 1.1 / Apache 2.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 단어 사전 데이터 -->
+  <div class="credits-section">
+    <h2><span>📖</span> 단어 사전 데이터 출처</h2>
+    <p class="legal-text">
+      본 앱의 단어 사전은 다음 자료를 참고하여 원저자가 직접 작성한 로컬 데이터입니다:
+    </p>
+    <br/>
+    <div class="api-item">
+      <div class="api-icon">🇮🇱</div>
+      <div>
+        <div class="api-name">히브리어 (구약) 어원</div>
+        <div class="api-desc">Brown-Driver-Briggs Hebrew Lexicon (BDB, 1906) — 공개도메인</div>
+      </div>
+    </div>
+    <div class="api-item">
+      <div class="api-icon">🇬🇷</div>
+      <div>
+        <div class="api-name">그리스어 (신약) 어원</div>
+        <div class="api-desc">Thayer's Greek Lexicon (1889) — 공개도메인</div>
+      </div>
+    </div>
+    <div class="api-item">
+      <div class="api-icon">📘</div>
+      <div>
+        <div class="api-name">한국어 신학 백과사전 항목</div>
+        <div class="api-desc">공개도메인 자료 및 편집자 자체 저술 (CC BY 4.0 적용)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기술 스택 -->
+  <div class="credits-section">
+    <h2><span>⚙️</span> 기술 스택</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><strong>HTML5</strong><span>마크업 구조</span></div>
+      <div class="tech-item"><strong>CSS3</strong><span>커스텀 테마 + 반응형</span></div>
+      <div class="tech-item"><strong>Vanilla JS</strong><span>프레임워크 없는 순수 JS</span></div>
+      <div class="tech-item"><strong>PWA</strong><span>오프라인 지원 + 설치</span></div>
+      <div class="tech-item"><strong>Service Worker</strong><span>캐시 전략</span></div>
+      <div class="tech-item"><strong>Web Manifest</strong><span>홈 화면 추가</span></div>
+      <div class="tech-item"><strong>OSM Tiles</strong><span>지도 미리보기</span></div>
+      <div class="tech-item"><strong>Wiki REST API</strong><span>백과사전 패널</span></div>
+    </div>
+  </div>
+
+  <!-- PWA 설치 안내 -->
+  <div class="credits-section">
+    <h2><span>📱</span> PWA 설치 방법</h2>
+    <p class="legal-text">
+      이 앱은 <strong>Progressive Web App(PWA)</strong>으로 기기 홈 화면에 설치할 수 있습니다.
+    </p>
+    <br/>
+    <div class="api-item">
+      <div class="api-icon">🍎</div>
+      <div>
+        <div class="api-name">iOS Safari</div>
+        <div class="api-desc">하단 공유 버튼(□↑) → "홈 화면에 추가"</div>
+      </div>
+    </div>
+    <div class="api-item">
+      <div class="api-icon">🤖</div>
+      <div>
+        <div class="api-name">Android Chrome</div>
+        <div class="api-desc">주소창 우측 ⋮ 메뉴 → "앱 설치" 또는 "홈 화면에 추가"</div>
+      </div>
+    </div>
+    <div class="api-item">
+      <div class="api-icon">🖥️</div>
+      <div>
+        <div class="api-name">데스크톱 Chrome/Edge</div>
+        <div class="api-desc">주소창 우측 설치 아이콘(⊕) 클릭 → 설치</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 법적 고지 -->
+  <div class="credits-section">
+    <h2><span>⚖️</span> 법적 고지 (Disclaimer)</h2>
+    <p class="legal-text">
+      <strong>1. 성경 텍스트:</strong> 본 앱에서 사용하는 모든 성경 텍스트는 공개도메인이며,
+      상업적 사용을 포함한 모든 목적으로 자유롭게 사용할 수 있습니다.<br/><br/>
+
+      <strong>2. 사전 / 백과사전 데이터:</strong> 로컬 사전 데이터는 편집자가 직접 작성하거나
+      공개도메인 자료에서 파생된 것입니다. Wikipedia 요약은 해당 문서의 라이선스
+      (CC BY-SA 4.0)를 따릅니다.<br/><br/>
+
+      <strong>3. 지도 타일:</strong> OpenStreetMap 타일은 © OpenStreetMap contributors이며,
+      ODbL(Open Database License) 하에 제공됩니다.<br/><br/>
+
+      <strong>4. 앱 코드:</strong> 이 앱의 소스 코드는 별도 라이선스 고지가 없는 한
+      MIT License 조건으로 사용할 수 있습니다.<br/><br/>
+
+      <strong>5. 책임 한계:</strong> 이 앱은 신학적 학술 목적 및 개인 성경 연구를 위한
+      도구이며, 특정 교단·교회의 공식 입장을 대변하지 않습니다.
+    </p>
+  </div>
+
+  <!-- 버전 정보 -->
+  <div class="version-footer">
+    <p>가돌 성경 v1.0.0-MVP · 2024</p>
+    <p style="margin-top:4px">창세기 1장 31절 · 요한복음 1장 51절 · KRV + WEB 병렬</p>
+    <p style="margin-top:8px">
+      지도 제공:
+      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>
+      · 백과사전:
+      <a href="https://ko.wikipedia.org" target="_blank" rel="noopener">Wikipedia KO</a>
+    </p>
+  </div>
+
+</main>
+
+<script>
+  // 테마 유지
+  const savedTheme = localStorage.getItem('gadol_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('gadol_theme', next);
+    if (btn) btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  }
+
+  // 진행 바
+  window.addEventListener('scroll', () => {
+    const docEl = document.documentElement;
+    const pct = (window.scrollY / (docEl.scrollHeight - docEl.clientHeight)) * 100;
+    document.getElementById('readingFill').style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
+</script>
+</body>
+</html>
