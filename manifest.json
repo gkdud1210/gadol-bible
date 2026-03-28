@@ -1,6 +1,6 @@
 {
-  "name": "가돌 성경 — KRV·WEB 병렬 읽기",
-  "short_name": "가돌 성경",
+  "name": "가돌헤세드 바이블 — KRV·WEB 병렬 읽기",
+  "short_name": "가돌헤세드 바이블",
   "description": "개역한글(KRV 1961)·영어(WEB) 병렬 성경. 단어 탭으로 한국어 뜻·백과사전·지도 미리보기 제공.",
   "start_url": "/index.html",
   "display": "standalone",
@@ -21,6 +21,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "screenshots": [
